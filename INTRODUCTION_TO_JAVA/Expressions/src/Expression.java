@@ -1,5 +1,4 @@
-
-/**
+/** Chris Snowden
  * The base class for all classes encapsulating arithmetic expressions.
  */
 public abstract class Expression {
