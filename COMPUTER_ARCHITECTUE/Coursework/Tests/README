@@ -1,0 +1,3 @@
+Run tests individually or using test suite. 
+Set buffer settings as appropriate.
+Test Suits uses tee to redirect output, when buffer is off can lose output

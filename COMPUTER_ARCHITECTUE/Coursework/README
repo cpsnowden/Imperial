@@ -1,0 +1,6 @@
+NOTE:
+
+start should be run in the background as it cleans up the memory and semaphore
+used by the producer and consumer when they have finished.
+
+./start N &
