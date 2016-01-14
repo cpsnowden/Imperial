@@ -1,0 +1,107 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf130
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Trade Program queries:\
+1)\
+sells(britain, oil, USA).\
+->true\
+2)\
+sells(X,gain,Y).\
+->usa sells grain to Japan\
+3)\
+sells(X,oil,britain).\
+->oman, iraq\
+4)\
+sells(X,Y,germany).\
+X=japan, Y=computers\
+X=france, Y=iron\
+5)\
+sells(X,_,germany).\
+X=japan\
+X=france\
+6)\
+sells(X,_,Y),sells(Y,_,X),X\\=Y.\
+X=usa, Y=japan\
+X=oman Y = japan\
+X=iraq Y=japan\
+X=japan Y=germany\
+and pointers to themselves\
+7)\
+sells(X,_,Y),sells(Y,_,X),X\\=Y.\
+X=usa, Y=japan\
+X=oman Y = japan\
+X=iraq Y=japan\
+X=japan Y=germany\
+8)\
+bilateral_traders(X,Z):-\
+			sells(X,_,Z),\
+			sells(Z,_,X),\
+			X\\=Z.\
+9)\
+produces(_,Y),needs(britain,Y),needs(germany,Y).\
+japan\
+======================\
+7a)\
+country(X),needs(X,Y),nat_res(X,Y).\
+X=britain, Y=coal\
+b)\
+country(X),produces(X,iron),ce(X,Y),needs(japan,Y).\
+X=france, Y=coal\
+c)\
+country(X),needs(X,coal),needs(X,coal).\
+X=britain\
+X=japan\
+d)\
+country(X),needs(X,Y),ce(south_africa,Y).\
+X=japan\
+Y=diamonds\
+8a)\
+mines(C,I):-\
+		country(C),\
+		nat_res(C,I),\
+		ce(C,I).\
+b)\
+export(C1,I,C2):-\
+		country(C1),\
+		country(C2),\
+		produces(C1,I),\
+		needs(C2,I).\
+\
+export(C1,I,C2):-\
+		country(C1),\
+		country(C2),		\
+		mines(C1,I),\
+		needs(C2,I).\
+c)\
+in_competition(C1,C2,I):-\
+			export(C1,I,_),\
+			export(C2,I,_),\
+			C1\\=C2.\
+d)\
+lower_price(I):- in_competition(_,_,I).\
+9a)\
+mines(X,Y).\
+X=france, Y= coal\
+X=south_africa, Y=diamonds\
+b)\
+export(X,Y,_),export(X,Z,_),Y\\=Z.\
+X=france, Y=iron, Z=coal\
+c)\
+in_competition(X,Y,oil),!.\
+X=oman\
+Y=iraq\
+d)\
+in_competition(X,Z,Y),export(X,Y,japan),export(X,Y,britain),!.\
+X=oman,\
+Z=iraq,\
+Y=oil\
+e)\
+export(germany,_,Y),needs(Y,Z),export(W,Z,_),mines(W,diamonds).\
+Y=japan\
+Z=diamonds\
+W=south_africa\
+f)\
+lower_price(X),needs(Y,X),needs(Z,X),Z\\=Y,!.}

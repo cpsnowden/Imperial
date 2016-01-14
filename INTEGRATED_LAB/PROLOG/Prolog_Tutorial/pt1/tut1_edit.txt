@@ -1,0 +1,62 @@
+country(britain).
+country(japan).
+country(germany).
+country(france).
+country(south_africa).
+country(oman).
+country(iraq).
+
+sells(usa, grain, japan).
+sells(S, P, R) :-  produces(S, P), needs(R, P).
+
+produces(oman, oil).
+produces(iraq, oil).
+produces(japan, computers).
+produces(germany, cars).
+produces(france, iron).
+
+needs(germany, iron).
+needs(britain, cars).
+needs(britain, coal).
+needs(japan, cars).
+needs(japan, coal).
+needs(japan, diamonds).
+needs(C, computers) :- country(C).
+needs(C, oil) :- needs(C, cars).
+
+nat_res(france, coal).
+nat_res(britain, coal).
+nat_res(south_africa, diamonds).
+
+ce(france, coal).
+ce(south_africa, diamonds).
+
+bilateral_traders(X,Z):-
+			sells(X,_,Z),
+			sells(Z,_,X),
+			X\=Z.
+
+mines(C,I):-
+		country(C),
+		nat_res(C,I),
+		ce(C,I).
+
+export(C1,I,C2):-
+		country(C1),
+		country(C2),
+		produces(C1,I),
+		needs(C2,I).
+
+export(C1,I,C2):-
+		country(C1),
+		country(C2),		
+		mines(C1,I),
+		needs(C2,I).
+
+in_competition(C1,C2,I):-
+			export(C1,I,_),
+			export(C2,I,_),
+			C1\=C2.
+
+lower_price(I):- in_competition(_,_,I).
+
